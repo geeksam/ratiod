@@ -22,46 +22,46 @@ class Ratio
   end
 
   def +(other)
-    c1 = self.numer * other.denom + other.numer * self.denom
-    c2 = self.denom * other.denom
-    self.class.new(c1, c2)
+    a = self.numer * other.denom + other.numer * self.denom
+    b = self.denom * other.denom
+    self.class.new(a, b)
   end
 
   def -(other)
-    c1 = self.numer * other.denom - other.numer * self.denom
-    c2 = self.denom * other.denom
-    self.class.new(c1, c2)
+    a = self.numer * other.denom - other.numer * self.denom
+    b = self.denom * other.denom
+    self.class.new(a, b)
   end
 
   def *(other)
-    c1 = self.numer * other.numer
-    c2 = self.denom * other.denom
-    self.class.new(c1, c2)
+    a = self.numer * other.numer
+    b = self.denom * other.denom
+    self.class.new(a, b)
   end
 
   def /(other)
-    c1 = self.numer * other.denom
-    c2 = other.numer * self.denom
-    self.class.new(c1, c2)
+    a = self.numer * other.denom
+    b = other.numer * self.denom
+    self.class.new(a, b)
   end
 
   def **(power)
     case power
     when Integer
       if power > 0
-        c1 = numer ** power
-        c2 = denom ** power
+        a = numer ** power
+        b = denom ** power
       elsif power == 0
-        c1, c2 = 1, 1 # by definition
+        a, b = 1, 1 # by definition
       else
-        c1 = denom ** power.abs
-        c2 = numer ** power.abs
+        a = denom ** power.abs
+        b = numer ** power.abs
       end
-      return self.class.new(c1, c2)
+      return self.class.new(a, b)
     when Float
-      c1 = numer ** power
-      c2 = denom ** power
-      return c1 / c2
+      a = numer ** power
+      b = denom ** power
+      return a / b
     end
   end
 
