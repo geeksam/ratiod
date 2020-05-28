@@ -65,6 +65,14 @@ class Ratio
     end
   end
 
+  def coerce(other)
+    case other
+    when Float
+      self_as_float = numer.to_f / denom
+      return other, self_as_float
+    end
+  end
+
   def to_s
     "%d/%d" % [ numer, denom ]
   end
