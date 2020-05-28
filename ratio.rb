@@ -1,85 +1,80 @@
 class Ratio
-  attr_reader :numerator, :denominator
-  def initialize(numerator, denominator)
-    raise ZeroDivisionError if denominator.zero?
+  attr_reader :numer, :denom
+  def initialize(numer, denom)
+    raise ZeroDivisionError if denom.zero?
 
-    gcd = numerator.gcd(denominator)
+    gcd = numer.gcd(denom)
 
-    @numerator   = numerator   / gcd
-    @denominator = denominator / gcd
+    @numer = numer / gcd
+    @denom = denom / gcd
 
-    if denominator < 0
-      @numerator *= -1
-      @denominator *= -1
+    if denom < 0
+      @numer *= -1
+      @denom *= -1
     end
   end
 
+  def numerator   ; numer ; end
+  def denominator ; denom ; end
+
   def ==(other)
-    self.numerator == other.numerator && self.denominator == other.denominator
+    self.numer == other.numer && self.denom == other.denom
   end
 
   def +(other)
-    a1, b1 = self .numerator, self .denominator
-    a2, b2 = other.numerator, other.denominator
-    c1 = (a1 * b2) + (a2 * b1)
-    c2 = b1 * b2
+    c1 = self.numer * other.denom + other.numer * self.denom
+    c2 = self.denom * other.denom
     self.class.new(c1, c2)
   end
 
   def -(other)
-    a1, b1 = self .numerator, self .denominator
-    a2, b2 = other.numerator, other.denominator
-    c1 = (a1 * b2) - (a2 * b1)
-    c2 = b1 * b2
+    c1 = self.numer * other.denom - other.numer * self.denom
+    c2 = self.denom * other.denom
     self.class.new(c1, c2)
   end
 
   def *(other)
-    a1, b1 = self .numerator, self .denominator
-    a2, b2 = other.numerator, other.denominator
-    c1 = a1 * a2
-    c2 = b1 * b2
+    c1 = self.numer * other.numer
+    c2 = self.denom * other.denom
     self.class.new(c1, c2)
   end
 
   def /(other)
-    a1, b1 = self .numerator, self .denominator
-    a2, b2 = other.numerator, other.denominator
-    c1 = a1 * b2
-    c2 = a2 * b1
+    c1 = self.numer * other.denom
+    c2 = other.numer * self.denom
     self.class.new(c1, c2)
   end
 
   def **(power)
-    return self.class.new(1, 1) if power.zero? # by definition
-
     case power
     when Integer
       if power > 0
-        c1 = numerator ** power
-        c2 = denominator ** power
+        c1 = numer ** power
+        c2 = denom ** power
+      elsif power == 0
+        c1, c2 = 1, 1 # by definition
       else
-        c1 = denominator ** power.abs
-        c2 = numerator ** power.abs
+        c1 = denom ** power.abs
+        c2 = numer ** power.abs
       end
-      self.class.new(c1, c2)
+      return self.class.new(c1, c2)
     when Float
-      c1 = numerator ** power
-      c2 = denominator ** power
+      c1 = numer ** power
+      c2 = denom ** power
       return c1 / c2
     end
   end
 
   def to_s
-    "%d/%d" % [ numerator, denominator ]
+    "%d/%d" % [ numer, denom ]
   end
 
   def inspect
-    "#<Ratio(%d, %d)>" % [ numerator, denominator ]
+    "#<Ratio(%d, %d)>" % [ numer, denom ]
   end
 
   def abs
-    self.class.new( numerator.abs, denominator.abs )
+    self.class.new( numer.abs, denom.abs )
   end
 end
 
