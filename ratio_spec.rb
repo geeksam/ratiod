@@ -95,4 +95,10 @@ RSpec.describe Ratio do
     expect( Ratio(2, 3) ** -2 ).to eq( Ratio(9, 4) )
     expect( Ratio(3, 5) ** -2 ).to eq( Ratio(25, 9) )
   end
+
+  specify "exponentiation to a float" do
+    result = Ratio(2, 3) ** 1.1
+    expect( result ).to be_a( Float )
+    expect( result ).to eq( (2 ** 1.1) / (3 ** 1.1) )
+  end
 end

@@ -51,19 +51,23 @@ class Ratio
   end
 
   def **(power)
+    return self.class.new(1, 1) if power.zero? # by definition
+
     case power
     when Integer
       if power > 0
         c1 = numerator ** power
         c2 = denominator ** power
-      elsif power < 0
+      else
         c1 = denominator ** power.abs
         c2 = numerator ** power.abs
-      elsif power.zero?
-        c1, c2 = 1, 1 # by definition
       end
+      self.class.new(c1, c2)
+    when Float
+      c1 = numerator ** power
+      c2 = denominator ** power
+      return c1 / c2
     end
-    self.class.new(c1, c2)
   end
 
   def to_s
