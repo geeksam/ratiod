@@ -48,28 +48,21 @@ class Ratio
   def **(power)
     case power
     when Integer
-      if power > 0
-        a = numer ** power
-        b = denom ** power
-      elsif power == 0
-        a, b = 1, 1 # by definition
-      else
-        a = denom ** power.abs
-        b = numer ** power.abs
-      end
-      return self.class.new(a, b)
+      raised_to_integer(power)
     when Float
-      a = numer ** power
-      b = denom ** power
-      return a / b
+      raised_to_float(power)
+    else
+      raise TypeError, "IDK, how *do* you raise a Ratio to a #{power.class}?"
     end
   end
 
   def coerce(other)
     case other
     when Float
-      self_as_float = numer.to_f / denom
+      self_as_float = numer.to_f / denom.to_f
       return other, self_as_float
+    else
+      raise TypeError, "IDK, how *do* you coerce a Ratio to a #{other.class}?"
     end
   end
 
@@ -83,6 +76,25 @@ class Ratio
 
   def abs
     self.class.new( numer.abs, denom.abs )
+  end
+
+  private
+
+  def raised_to_integer(power)
+    return self.class.new(1, 1) if power.zero? # by definition
+    if power > 0
+      a, b = numer, denom
+    else
+      a, b = denom, numer
+    end
+    a, b = a ** power.abs, b ** power.abs # "power abs" sounds like an absurd fitness product
+    self.class.new(a, b)
+  end
+
+  def raised_to_float(power)
+    a = numer ** power
+    b = denom ** power
+    a / b
   end
 end
 
