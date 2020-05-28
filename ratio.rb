@@ -8,6 +8,7 @@ class Ratio
     @numer = numer / gcd
     @denom = denom / gcd
 
+    # Make sure the negative sign, if there is one, is always on the numerator
     if denom < 0
       @numer *= -1
       @denom *= -1
