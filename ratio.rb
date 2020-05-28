@@ -66,8 +66,8 @@ class Ratio
   def coerce(other)
     case other
     when Float
-      self_as_float = numer.to_f / denom.to_f
-      return other, self_as_float
+      coerced = numer.to_f / denom.to_f
+      return other, coerced
     else
       raise TypeError, "IDK, how *do* you coerce a Ratio to a #{other.class}?"
     end
