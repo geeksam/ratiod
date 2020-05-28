@@ -18,7 +18,14 @@ class Ratio
   def denominator ; denom ; end
 
   def ==(other)
-    self.numer == other.numer && self.denom == other.denom
+    case other
+    when self.class
+      self.numer == other.numer && self.denom == other.denom
+    when Integer
+      self.numer == other && self.denom == 1
+    else
+      raise TypeError, "IDK, how *do* you compare a Ratio with a #{other.class}?"
+    end
   end
 
   def +(other)

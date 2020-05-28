@@ -42,6 +42,17 @@ RSpec.describe Ratio do
     expect( b ).to eq( a )
   end
 
+  specify "equality with integers" do
+    a = Ratio( 1, 1 )
+    b = Ratio( 2, 1 )
+    expect( a ).to     eq( 1 )
+    expect( b ).to     eq( 2 )
+    expect( b ).to_not eq( 3 )
+    expect( 1 ).to     eq( a )
+    expect( 2 ).to     eq( b )
+    expect( 3 ).to_not eq( b )
+  end
+
   specify "#abs (absolute value)" do
     expect( Ratio( 1,  3).abs ).to eq( Ratio(1, 3) )
     expect( Ratio(-1,  3).abs ).to eq( Ratio(1, 3) )
@@ -50,10 +61,15 @@ RSpec.describe Ratio do
   end
 
   specify "reduction" do
-    r = Ratio(2, 4)
-    expect( r.numerator   ).to eq( 1 )
-    expect( r.denominator ).to eq( 2 )
-    expect( r.to_s        ).to eq( "1/2" )
+    a = Ratio(2, 4)
+    expect( a.numerator   ).to eq( 1 )
+    expect( a.denominator ).to eq( 2 )
+    expect( a.to_s        ).to eq( "1/2" )
+
+    a = Ratio(4, 2)
+    expect( a.numerator   ).to eq( 2 )
+    expect( a.denominator ).to eq( 1 )
+    expect( a.to_s        ).to eq( "2/1" )
   end
 
   specify "addition" do
