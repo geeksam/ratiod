@@ -1,6 +1,10 @@
 class Ratio
   attr_reader :numer, :denom
   def initialize(numer, denom)
+    unless numer.is_a?(Integer) && denom.is_a?(Integer)
+      raise TypeError, "numerator and denominator must be integers!"
+    end
+
     raise ZeroDivisionError if denom.zero?
 
     gcd = numer.gcd(denom)
